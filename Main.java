@@ -32,6 +32,7 @@ public class Main {
     while (flag != true){
       if (tamanho<2 || tamanho>24){
         System.out.printf("Tamanho de palavra não permmitido.\n");
+        System.out.printf("Sério!? A palavra deve ter tamanho entre 2 e 23:\n");
         tamanho = lerEntrada.nextInt();
       }
       else{
@@ -39,7 +40,13 @@ public class Main {
         flag = true;
       }
     }
-      
+    
+    //RF2: A palavra deve ser sorteada da lista que se encontra nesse link
+    Random sorteio = new Random();
+    Integer countNumeroPalavras = dicPalavras.get(tamanho).size();
+    Integer numSorteado = sorteio.nextInt(countNumeroPalavras);
+    String palavraSorteada = dicPalavras.get(tamanho).get(numSorteado);
+
     System.out.printf("Informe uma palavra:\n");
     String palavra = lerEntrada.next();
     //tem q tratar essa entrada de palavra, pois pode haver um tamanho q não existe no dic.
@@ -52,6 +59,5 @@ public class Main {
     System.out.printf("Encerrado.");        
     //System.out.println(dicPalavras.keySet().toString());
     //System.out.println(dicPalavras.get(18));
-
   }
 }
