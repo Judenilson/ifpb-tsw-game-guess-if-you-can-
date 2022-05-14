@@ -7,6 +7,9 @@ import java.util.*;
 public class Main {
 
   public static void main(String args[]) throws IOException {
+    System.out.println("::::: JOGO ADIVINHE SE PUDER :::::");
+    System.out.println("Instruções: Você tentará adivinhar a palavra sorteada, \n que terá o tamanho especificado por você, na quantidade \n de tentativas que você também determinará. Como dica, \n será informado em minúscula as letras que existem na \n palavra sorteada porém podem estar em qualquer lugar da \n mesma, e em maiúscula as letras que existirem e \n estiverem na posição correta da palavra. \n Boa sorte e Divirta-se!");
+    System.out.println("Preparando Banco de Palavras...");
     Path path = Paths.get("words.txt"); //caminho do arquivo contendo as palavras
     List<String> linhasArquivo = Files.readAllLines(path); //colocando os arquvios numa lista
 
@@ -22,11 +25,9 @@ public class Main {
         dicPalavras.get(item.length()).add(item);
       }
     }
-          
-    //Lendo dados de entrada do jogador
-    Scanner lerEntrada = new Scanner(System.in);
+    
     //RF1: O jogador pode escolher o tamanho da palavra (o mínimo é 2 letras)    
-    System.out.println("::::: JOGO ADIVINHE SE PUDER :::::");
+    Scanner lerEntrada = new Scanner(System.in);
     System.out.println("Informe o tamanho da palavra, entre 2 e 23:");
     Integer tamanho = lerEntrada.nextInt();
     Integer tentativas = 1;
@@ -51,9 +52,9 @@ public class Main {
       }
     }    
         
-    System.out.println("!!!!!!!!!!!!!!!!!");
+    System.out.println("....................................................");
     System.out.printf("Sorteando palavra de tamanho %d para iniciar o Jogo.\n", tamanho);
-    System.out.println("!!!!!!!!!!!!!!!!!");
+    System.out.println("....................................................");
     
     //RF2: A palavra deve ser sorteada da lista que se encontra nesse link
     Random sorteio = new Random();
@@ -64,20 +65,21 @@ public class Main {
 
     String resposta = "";
     char palavraSorteadaAnalisada[] = palavraSorteada.toCharArray();
-    System.out.printf("PARA TESTE! A palavra sorteada foi: ");
-    System.out.println(palavraSorteadaAnalisada); //print para saber a palavra e poder testar!!! Quando OK deve ser comentado ou deletado.
+    // System.out.printf("PARA TESTE! A palavra sorteada foi: ");
+    // System.out.println(palavraSorteadaAnalisada); //print para saber a palavra e poder testar!!! Quando OK deve ser comentado ou deletado.
     
     System.out.println("::::: Jogo Iniciado, Divirta-se! :::::");
-    System.out.println("Para sair escreva 'x'");
+    // System.out.println("Para sair escreva 'x'");
     while (true){
-      palavraSorteadaAnalisada = palavraSorteada.toCharArray(); //a cada rodada a palavra tem q ser resetada, para analisar sem o "cincos" inseridos.
+      palavraSorteadaAnalisada = palavraSorteada.toCharArray(); //a cada rodada a palavra tem q ser resetada, para analisar sem o "cincos" inseridos.      
+
       System.out.println("Informe uma palavra:");
       String palavra = lerEntrada.next();      
       if (palavra.equals(palavraSorteada)){ //condição de vitória do jogo
         System.out.println("Você acertou, Parabéns!!!");   
         break;
       }
-      if (palavra.equals("x")){ break;} //condição de parada do jogo apenas durante TESTES, não está nos requisitos, deve ser REMOVIDO!
+      // if (palavra.equals("x")){ break;} //condição de parada do jogo apenas durante TESTES, não está nos requisitos, deve ser REMOVIDO!
        
       //erro caso o usuário digite palavras de tamanhos diferentes do determinado no início do jogo.
       if (palavra.length() != tamanho){
@@ -112,15 +114,17 @@ public class Main {
             }
           }         
           if (flag){resposta += "-";}
-        }        
-        System.out.println(resposta);
+        }
+        System.out.println(resposta);        
+        System.out.printf("Restam %d tentativas.\n", tentativas);
         if (contarVitoria == tamanho){
           System.out.println("Você acertou, Parabéns!!!");
           break;          
         } else{
           tentativas --;
           if (tentativas < 1){            
-            System.out.println("Que pena, você perdeu!!!");
+            System.out.println("Que pena, você perdeu!!!");            
+            System.out.printf("A palavra era: %s \n", palavraSorteada);
             break;
           }
         }
