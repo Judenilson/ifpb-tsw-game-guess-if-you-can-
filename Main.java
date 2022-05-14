@@ -25,14 +25,15 @@ public class Main {
           
     //Lendo dados de entrada do jogador
     Scanner lerEntrada = new Scanner(System.in);
-    //RF1: O jogador pode escolher o tamanho da palavra (o mínimo é 2 letras)
-    System.out.printf("Informe o tamanho da palavra, entre 2 e 23:\n");
+    //RF1: O jogador pode escolher o tamanho da palavra (o mínimo é 2 letras)    
+    System.out.println("::::: JOGO ADIVINHE SE PUDER :::::");
+    System.out.println("Informe o tamanho da palavra, entre 2 e 23:");
     Integer tamanho = lerEntrada.nextInt();
     boolean flag = false;
     while (flag != true){
       if (tamanho<2 || tamanho>24){
-        System.out.printf("Tamanho de palavra não permmitido.\n");
-        System.out.printf("Sério!? A palavra deve ter tamanho entre 2 e 23:\n");
+        System.out.println("Tamanho de palavra não permmitido.");
+        System.out.println("Sério!? A palavra deve ter tamanho entre 2 e 23:");
         tamanho = lerEntrada.nextInt();
       }
       else{
@@ -47,17 +48,60 @@ public class Main {
     Integer numSorteado = sorteio.nextInt(countNumeroPalavras);
     String palavraSorteada = dicPalavras.get(tamanho).get(numSorteado);
 
-    System.out.printf("Informe uma palavra:\n");
-    String palavra = lerEntrada.next();
-    //tem q tratar essa entrada de palavra, pois pode haver um tamanho q não existe no dic.
-    for (String item : dicPalavras.get(tamanho)){
-      if( item.equalsIgnoreCase(palavra) ){
-        System.out.println("Achei");
+    String resposta = "";
+    char palavraSorteadaAnalisada[] = palavraSorteada.toCharArray();
+    System.out.printf("PARA TESTE! A palavra sorteada foi: ");
+    System.out.println(palavraSorteadaAnalisada); //print para saber a palavra e poder testar!!! Quando OK deve ser comentado ou deletado.
+    
+    System.out.println("::::: Jogo Iniciado, Divirta-se! :::::");
+    System.out.println("Para sair escreva 'x'");
+    while (true){
+      palavraSorteadaAnalisada = palavraSorteada.toCharArray(); //a cada rodada a palavra tem q ser resetada, para analisar sem o "cincos" inseridos.
+      System.out.println("Informe uma palavra:");
+      String palavra = lerEntrada.next();      
+      if (palavra.equals(palavraSorteada)){ //condição de vitória do jogo
+        System.out.println("Você acertou, Parabéns!!!");   
         break;
       }
-    }
-    System.out.printf("Encerrado.");        
-    //System.out.println(dicPalavras.keySet().toString());
-    //System.out.println(dicPalavras.get(18));
+      if (palavra.equals("x")){ break;} //condição de parada do jogo apenas durante TESTES, não está nos requisitos, deve ser REMOVIDO!
+       
+      //erro caso o usuário digite palavras de tamanhos diferentes do determinado no início do jogo.
+      if (palavra.length() != tamanho){
+        System.out.println("Tamanho errado da palavra digitada!");        
+      } 
+      //verifica se o usuário escreveu, de fato, uma palavra ou letras aleatórias.
+      else if(!dicPalavras.get(tamanho).contains(palavra)){ 
+        System.out.println("A palavra digitada não existe!");       
+      } 
+      //RF4: Letra descoberta que está no local correto deve ser exibida em caixa alta.
+      else{
+        resposta = ""; //apaga a resposta a cada loop de tentativas
+        for (int i=0; i<palavra.length(); i++) { //itera cada letra da palavra digitada
+          flag = true;
+          char letra = palavra.charAt(i);   
+          for (int j=0; j<tamanho; j++){ //itera a palavra sorteada
+            if (letra == palavraSorteadaAnalisada[j]){   
+              flag = false;
+              if(i==j){ //match, letra e posição, resposta com letra maiúscula.
+                resposta += Character.toUpperCase(letra);
+                palavraSorteadaAnalisada[i] = '5'; //coloca o 5 na posição que está correta.
+                } 
+              else {
+                String Letra = ""+letra;
+                if (!resposta.contains(Letra)){                  
+                  resposta += letra;
+                }
+              }
+              break;
+            }
+          }         
+          if (flag){resposta += "-";}
+        }        
+        System.out.println(resposta);
+      }      
+      // System.out.println(palavraSorteadaAnalisada);
+    }   
+    
+    System.out.printf("Fim do Jogo.");
   }
 }
