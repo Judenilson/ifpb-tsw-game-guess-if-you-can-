@@ -70,7 +70,6 @@ public class Main {
     String palavraSorteada = dicPalavras.get(tamanho).get(numSorteado);
     Integer contarVitoria = 0;
 
-    String resposta = "";
     //palavraSorteada = "leite";//PARA TESTE: FORCA A PALAVRA
     char palavraSorteadaAnalisada[] = palavraSorteada.toCharArray();
     // System.out.printf("PARA TESTE! A palavra sorteada foi: ");
@@ -100,10 +99,8 @@ public class Main {
       } 
       //RF4: Letra descoberta que está no local correto deve ser exibida em caixa alta.
       else{
-        resposta = ""; //apaga a resposta a cada loop de tentativas
         contarVitoria = 0;
         
-        //nova lógica a partir deste ponto:
         String [] saida = new String[tamanho];//saida substitue resposta no codigo antigo
         for (int i=0; i<palavra.length(); i++) {//esse for procura somente match perfeito(letra e posicao iguais)
         	char letra = palavraAnalisada[i];
@@ -130,44 +127,17 @@ public class Main {
         	}
         }
         //tratamento para impressao
-        String s = "";
+        String resposta = "";
         for(String letra : saida) {
         	if (letra == null) {
-        		s+="-";
+        		resposta+="-";
         	}
         	else {
-        		s += letra;
+        		resposta += letra;
         	}
         	
         }
-        
-        //fim do codigo novo
-        
-//        for (int i=0; i<palavra.length(); i++) { //itera cada letra da palavra digitada
-//          flag = true;
-//          char letra = palavra.charAt(i);   
-//          for (int j=0; j<tamanho; j++){ //itera a palavra sorteada
-//            if (letra == palavraSorteadaAnalisada[j]){   
-//              flag = false;
-//              if(i==j){ //match, letra e posição, resposta com letra maiúscula.
-//                resposta += Character.toUpperCase(letra);
-//                palavraSorteadaAnalisada[i] = '5'; //coloca o 5 na posição que está correta.
-//                contarVitoria ++;
-//                } 
-//              else {
-//                String Letra = ""+letra;
-//                if (!resposta.contains(Letra)){                  
-//                  resposta += letra;
-//                }
-//              }
-//              break;
-//            }
-//          }         
-//          if (flag){resposta += "-";}
-//        }
-        System.out.println(s); 
-        System.out.println(resposta);        
-        System.out.printf("Restam %d tentativas.\n", tentativas);
+        System.out.println(resposta); 
         if (contarVitoria == tamanho){
           System.out.println("Você acertou, Parabéns!!!");
           break;          
@@ -178,12 +148,11 @@ public class Main {
             System.out.println("Que pena, você perdeu!!!");            
             System.out.printf("A palavra era: %s \n", palavraSorteada);
             break;
-          }
+          }          
+        System.out.printf("Restam %d tentativas.\n", tentativas);
         }
       }
-      // System.out.println(palavraSorteadaAnalisada);
-    }   
-    
+    }       
     System.out.printf("Fim do Jogo.");
   }
 }
