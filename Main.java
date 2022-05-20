@@ -32,7 +32,6 @@ public class Main {
 	        dicPalavras.get(item.length()).add(item);
 	      }
     }
-    
     //RF1: O jogador pode escolher o tamanho da palavra (o mínimo é 2 letras)    
     Scanner lerEntrada = new Scanner(System.in);
     System.out.println("Informe o tamanho da palavra, entre 2 e 23:");
@@ -82,6 +81,10 @@ public class Main {
 
       System.out.println("Informe uma palavra:");
       String palavra = lerEntrada.next().toLowerCase();//ignora letras maiúsculas digitadas.   
+      String palavraSemAcento = Normalizer.normalize(palavra, Normalizer.Form.NFD);//bloco para retirar acentuacao das palavras 
+	    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+      palavra = pattern.matcher(palavraSemAcento).replaceAll("");
+      
       char palavraAnalisada[] = palavra.toCharArray();
       if (palavra.equals(palavraSorteada)){ //condição de vitória do jogo
         System.out.println("Você acertou, Parabéns!!!");   
